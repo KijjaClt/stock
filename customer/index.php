@@ -107,8 +107,8 @@ $db->close();
     <script>
     function confirmDelete(id) {
       swal({
-          title: "ยืนยันการลบรายชื่อพนักงาน",
-          text: "คุณแน่ใจที่จะลบพนักงานคนนี้ออกจากระบบใช่หรือไม่ ?",
+          title: "ยืนยันการลบรายชื่อลูกค้า",
+          text: "คุณแน่ใจที่จะลบลูกค้าคนนี้ออกจากระบบใช่หรือไม่ ?",
           icon: "warning",
           buttons: true,
           dangerMode: true,
@@ -118,7 +118,7 @@ $db->close();
             $.ajax({
               url: "delete.php?id=" + id,
               success: function (result) {
-                swal("ยินดีด้วย! การลบพนักงานสำเร็จ", {
+                swal("ยินดีด้วย! การลบลูกค้าสำเร็จ", {
                   icon: "success",
                 }).then((ok) => {
                   location.reload();

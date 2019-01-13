@@ -1,32 +1,34 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
 
-// if (isset($_POST["action"])) {
-//     $db = new DB();
-//     $db->connect();
+if (isset($_POST["action"])) {
+    $db = new DB();
+    $db->connect();
 
-//     $name = $_POST["name"];
-//     $username = $_POST["username"];
-//     $password = $_POST["password"];
-//     $sql = "INSERT INTO customer (customer_id, customer_name, username, `password`) VALUES (NULL, '" . $name . "', '" . $username . "', '" . $password . "');";
+    $firstName = $_POST["first-name"];
+    $lastName = $_POST["last-name"];
+    $address = $_POST["address"];
+    $tel = $_POST["tel"];
+    $type = $_POST["type"];
+    $sql = "INSERT INTO customer (customer_id, customer_name, customer_lastname, customer_address, customer_tel, create_date, customer_picture, customer_type) VALUES (NULL, '" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $tel . "', '" . date("Y-m-d H:i:s") . "', NULL, '" . $type . "');";
 
-//     var_dump($sql);die;
+    // var_dump($sql);die;
 
-//     $result = $db->query($sql);
-//     if ($result) {
-//         echo '<div class="alert alert-success">'.
-//             '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'.
-//             '<i class="icon-ok-sign"></i><strong>ยินดีด้วย!</strong> เพิ่มรายชื่อลูกค้าใหม่สำเร็จ</a>'.
-//             '</div>';
-//     } else {
-//         echo '<div class="alert alert-danger">'.
-//             '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'.
-//             '<i class="icon-ban-circle"></i><strong>เกิดข้อผิดพลาด!!</strong> <a href="#" class="alert-link">กรุณาตรวจสอบแบบฟอร์มใหม่อีกครั้ง.'.
-//             '</div>';
-//     }
+    $result = $db->query($sql);
+    if ($result) {
+        echo '<div class="alert alert-success">'.
+            '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'.
+            '<i class="icon-ok-sign"></i><strong>ยินดีด้วย!</strong> เพิ่มรายชื่อลูกค้าใหม่สำเร็จ</a>'.
+            '</div>';
+    } else {
+        echo '<div class="alert alert-danger">'.
+            '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'.
+            '<i class="icon-ban-circle"></i><strong>เกิดข้อผิดพลาด!!</strong> <a href="#" class="alert-link">กรุณาตรวจสอบแบบฟอร์มใหม่อีกครั้ง.'.
+            '</div>';
+    }
 
-//     $db->close();
-// }
+    $db->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,15 +90,15 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
                                             <div class="col-sm-6">
                                                 <br>
                                                 <label>เบอร์โทรศัพท์</label>
-                                                <input type="password" name="re-password" class="form-control rounded parsley-validated"
+                                                <input type="text" name="tel" class="form-control rounded parsley-validated"
                                                     data-required="true" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
                                                 <br>
                                                 <label>สถานะ</label>
-                                                <select name="account" class="form-control rounded m-b">
-                                                    <option>Normal</option>
-                                                    <option>VIP</option>
+                                                <select name="type" class="form-control rounded m-b">
+                                                    <option value="0">Normal</option>
+                                                    <option value="1">VIP</option>
                                                 </select>
                                             </div>
                                         </div>
