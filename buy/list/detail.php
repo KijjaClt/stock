@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
 
 $db = new DB();
 $db->connect();
-$result = $db->query("SELECT * FROM buy NATURAL JOIN contact NATURAL JOIN employee");
+$result = $db->query("SELECT * FROM buy_detail NATURAL JOIN product");
 $db->close();
 ?>
 
@@ -12,7 +12,7 @@ $db->close();
 
 <head>
   <meta charset="utf-8" />
-  <title>รายการซื้อ</title>
+  <title>รายละเอียดรายการซื้อ</title>
   <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <link rel="stylesheet" href="/stock/asset/css/bootstrap.css" type="text/css" />
@@ -53,18 +53,18 @@ $db->close();
             <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">
-                  <h4>รายการซื้อ</h4>
+                  <h4>รายละเอียดรายการซื้อ</h4>
                 </header>
                 <div class="table-responsive">
                   <table class="table table-striped b-t text-sm">
                     <thead>
                       <tr>
                         <th width="20">#</th>
-                        <th>รายการ</th>
-                        <th>วันที่ทำรายการ</th>
-                        <th>คู่ค้า</th>
-                        <th>ผู้ชื้อ</th>
-                        <th>มูลค่ารวม (บาท)</th>
+                        <th>รหัสสินค้า</th>
+                        <th>ชื่อสินค้า</th>
+                        <th>จำนวน</th>
+                        <th>มูลค่าต่อหน่วย</th>
+                        <th>รวม</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -78,19 +78,19 @@ $db->close();
                           <p><?= $i ?></p>
                         </td>
                         <td>
-                          <p><a class="hover" href="detail.php?id=<?= $row["buy_id"]?>"><?= $row["buy_id"]?></a></p>
+                          <p><?= $row["product_no"]?></p>
                         </td>
                         <td>
-                          <p><?= $row["buy_date"]; ?></p>
+                          <p><?= $row["product_name"]; ?></p>
                         </td>
                         <td>
-                          <p><?= $row["contact_name"]; ?></p>
+                          <p><?= $row["amount"]; ?></p>
                         </td>
                         <td>
-                          <p><?= $row["employee_name"]; ?></p>
+                          <p><?= $row["price"]; ?></p>
                         </td>
                         <td>
-                          <p><?= $row["net_price"]; ?></p>
+                          <p><?= $row["price"] * $row["amount"]; ?></p>
                         </td>
                       </tr>
                       <?php $i++; }} ?>

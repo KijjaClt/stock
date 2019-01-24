@@ -10,11 +10,17 @@ if (isset($_POST["action"])) {
     $address = $_POST["address"];
     $tel = $_POST["tel"];
     $type = $_POST["type"];
-    $sql = "INSERT INTO contact (contact_id, contact_name, contact_lastname, contact_address, contact_tel, create_date, contact_picture, contact_type) VALUES (NULL, '" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $tel . "', '" . date("Y-m-d H:i:s") . "', NULL, '" . $type . "');";
+    $sql = "INSERT INTO buy (buy_id, buy_name, buy_lastname, buy_address, buy_tel, create_date, buy_picture, buy_type) VALUES (NULL, '" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $tel . "', '" . date("Y-m-d H:i:s") . "', NULL, '" . $type . "');";
     
     $result = $db->query($sql);
-    header("location: /stock/contact");
+    header("location: /stock/buy/list");
 
+    $db->close();
+} else {
+    $db = new DB();
+    $db->connect();
+    $contacts = $db->query("SELECT * FROM contact WHERE contact_type='0'");
+    $products = $db->query("SELECT * FROM product WHERE 1");
     $db->close();
 }
 ?>
@@ -23,7 +29,7 @@ if (isset($_POST["action"])) {
 
 <head>
     <meta charset="utf-8" />
-    <title>เพิ่มลูกค้า</title>
+    <title>สร้างรายการซื้อ</title>
     <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" href="/stock/asset/css/bootstrap.css" type="text/css" />
@@ -54,46 +60,69 @@ if (isset($_POST["action"])) {
                             <form method="post" action="add.php" data-validate="parsley">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        <span class="h4">เพิ่มลูกค้า</span>
+                                        <span class="h4">สร้างรายการซื้อ</span>
                                     </header>
                                     <div class="panel-body">
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-6">
-                                                <label>ชื่อ</label>
-                                                <input type="text" name="first-name" class="form-control rounded parsley-validated"
+                                                <label>รายการ</label>
+                                                <input type="text" name="id" class="form-control rounded parsley-validated"
                                                     data-required="true" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
-                                                <label>นามสกุล</label>
-                                                <input type="text" name="last-name" class="form-control rounded parsley-validated"
-                                                    autocomplete="off">
+                                                <label>คู่ค้า</label>
+                                                <select name="contact" class="form-control rounded m-b">
+                                                    <?php while ($row = mysqli_fetch_assoc($contacts)) {
+                                                        echo "<option value='". $row['contact_id'] ."'>". $row['contact_name'] ."</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="form-group pull-in clearfix">
+                                            <div class="col-sm-6">
+                                                <label>วันที่ทำรายการ</label>
+                                                <input type="date" name="date" class="form-control rounded parsley-validated"
+                                                    data-required="true" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                                    
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        <a href="#" class="btn bg-success pull-right"><i class="icon-plus"></i>เพิ่มลูกค้า</a>
+                                        <h4>สินค้า</h4>
+                                    </header>
+                                    <div class="panel-body">
+                                        <div class="form-group pull-in clearfix">
+                                            <div class="col-sm-12">
+                                                <label>เลือกสินค้า</label>
+                                                <select name="product" class="form-control rounded m-b">
+                                                    <?php while ($row = mysqli_fetch_assoc($products)) {
+                                                        echo "<option value='". $row['product_id'] ."'>". $row['product_name'] ."</option>";
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-6">
-                                                <label>ที่อยู่</label>
-                                                <textarea name="address" class="form-control" data-required="true"
-                                                    autocomplete="off" cols="30" rows="7"></textarea>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <br>
-                                                <label>เบอร์โทรศัพท์</label>
-                                                <input type="text" name="tel" class="form-control rounded parsley-validated"
+                                                <label>จำนวน</label>
+                                                <input type="text" name="amount" class="form-control rounded parsley-validated"
                                                     data-required="true" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
-                                                <br>
-                                                <label>สถานะ</label>
-                                                <select name="type" class="form-control rounded m-b">
-                                                    <option value="1">ลูกค้า</option>
-                                                    <option value="0">คู่ค้า</option>
-                                                </select>
+                                                <label>ราคาต่อหน่วย</label>
+                                                <input type="text" name="price" class="form-control rounded parsley-validated"
+                                                    data-required="true" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
                                     <footer class="panel-footer text-right bg-light lter">
                                         <button type="submit" name="action" value="add" class="btn btn-success btn-s-xs">บันทึก</button>
-                                        <a href="/stock/contact/" class="btn bg-danger btn-s-xs">กลับ</a>
+                                        <a href="/stock/buy/list" class="btn bg-danger btn-s-xs">กลับ</a>
                                     </footer>
                                 </section>
                             </form>

@@ -9,17 +9,7 @@ if (isset($_POST["action"])) {
     $sql = "INSERT INTO category (category_id, category_name) VALUES (NULL, '" . $name . "');";
 
     $result = $db->query($sql);
-    if ($result) {
-        echo '<div class="alert alert-success">'.
-            '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'.
-            '<i class="icon-ok-sign"></i><strong>ยินดีด้วย!</strong> เพิ่มรายชื่อหมวดหมู่ใหม่สำเร็จ</a>'.
-            '</div>';
-    } else {
-        echo '<div class="alert alert-danger">'.
-            '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'.
-            '<i class="icon-ban-circle"></i><strong>เกิดข้อผิดพลาด!!</strong> <a href="#" class="alert-link">กรุณาตรวจสอบแบบฟอร์มใหม่อีกครั้ง.'.
-            '</div>';
-    }
+    header("location: /stock/category");
 
     $db->close();
 }
