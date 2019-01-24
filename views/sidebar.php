@@ -24,10 +24,10 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#">สร้างรายการขาย</a>
+                                <a href="/stock/sell/add">สร้างรายการขาย</a>
                             </li>
                             <li>
-                                <a href="#">ดูรายการขาย</a>
+                                <a href="/stock/sell/list">ดูรายการขาย</a>
                             </li>
                         </ul>
                     </li>
@@ -44,10 +44,10 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#">สร้างรายการซื้อ</a>
+                                <a href="/stock/buy/add">สร้างรายการซื้อ</a>
                             </li>
                             <li>
-                                <a href="#">ดูรายการซื้อ</a>
+                                <a href="/stock/buy/list">ดูรายการซื้อ</a>
                             </li>
                         </ul>
                     </li>
@@ -66,7 +66,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/stock/customer">
+                        <a href="/stock/contact">
                             <i class="icon-user"></i>
                             <span>ลูกค้า</span>
                         </a>

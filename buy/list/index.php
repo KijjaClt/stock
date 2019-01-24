@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
 
 $db = new DB();
 $db->connect();
-$result = $db->query("SELECT * FROM customer");
+$result = $db->query("SELECT * FROM buy");
 $db->close();
 ?>
 
