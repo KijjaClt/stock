@@ -101,7 +101,7 @@ $db->close();
     <script>
     function confirmDelete(id) {
       swal({
-          title: "ยืนยันการลบรายชื่อพนักงาน",
+          title: "ยืนยันการพนักงาน",
           text: "คุณแน่ใจที่จะลบพนักงานคนนี้ออกจากระบบใช่หรือไม่ ?",
           icon: "warning",
           buttons: true,

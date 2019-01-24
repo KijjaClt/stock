@@ -8,7 +8,7 @@ if (isset($_POST["action"])) {
     $id = $_POST["id"];
     $name = $_POST["name"];
     $username = $_POST["username"];
-    $password = $_POST["password"];
+    $password = md5($_POST["password"]);
     $sql = "UPDATE employee SET employee_name = '" . $name . "', username = '" . $username . "', `password` = '" . $password . "' WHERE employee_id = " . $id . ";";
     $result = $db->query($sql);
     header("location: /stock/employee");

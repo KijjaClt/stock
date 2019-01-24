@@ -5,16 +5,36 @@ if (isset($_POST["action"])) {
     $db = new DB();
     $db->connect();
 
+    $no = $_POST["no"];
     $name = $_POST["name"];
-    $username = $_POST["username"];
-    $password = md5($_POST["password"]);
-    $sql = "INSERT INTO employee (employee_id, employee_name, username, `password`) VALUES (NULL, '" . $name . "', '" . $username . "', '" . $password . "');";
-
+    $normalPrice = ($_POST["normal_price"] != "") ? $_POST["normal_price"] : "NULL";
+    $vipPrice = ($_POST["vip_price"] != "") ? $_POST["vip_price"] : "NULL";
+    $category = $_POST["category"];
+    $sql = "INSERT INTO product (
+                product_id, 
+                product_no, 
+                product_name, 
+                product_cost, 
+                product_normal_price, 
+                product_vip_price, 
+                product_amount, 
+                category_id
+            ) VALUES (
+                NULL, 
+                '" . $no . "', 
+                '" . $name . "', 
+                NULL, 
+                " . $normalPrice . ", 
+                " . $vipPrice . ", 
+                0, 
+                " . $category . "
+            );";
+    
     $result = $db->query($sql);
     if ($result) {
         echo '<div class="alert alert-success">'.
             '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'.
-            '<i class="icon-ok-sign"></i><strong>ยินดีด้วย!</strong> เพิ่มรายชื่อพนักงานใหม่สำเร็จ</a>'.
+            '<i class="icon-ok-sign"></i><strong>ยินดีด้วย!</strong> เพิ่มรายชื่อสินค้าใหม่สำเร็จ</a>'.
             '</div>';
     } else {
         echo '<div class="alert alert-danger">'.
@@ -23,6 +43,11 @@ if (isset($_POST["action"])) {
             '</div>';
     }
 
+    $db->close();
+} else {
+    $db = new DB();
+    $db->connect();
+    $categories = $db->query("SELECT * FROM category");
     $db->close();
 }
 ?>
@@ -49,7 +74,7 @@ if (isset($_POST["action"])) {
 
 <body>
     <section class="hbox stretch">
-    <?php include_once $_SERVER['DOCUMENT_ROOT'].'/stock/views/sidebar.php'; ?>
+        <?php include_once $_SERVER['DOCUMENT_ROOT'].'/stock/views/sidebar.php'; ?>
         <!-- .vbox -->
         <section id="content">
             <section class="vbox">
@@ -62,35 +87,51 @@ if (isset($_POST["action"])) {
                             <form method="post" action="add.php" data-validate="parsley">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        <span class="h4">เพิ่มพนักงาน</span>
+                                        <span class="h4">เพิ่มสินค้า</span>
                                     </header>
                                     <div class="panel-body">
-                                        <div class="form-group">
-                                            <label>ชื่อผู้ใช้งาน</label>
-                                            <input type="text" name="username" class="form-control rounded parsley-validated"
-                                                data-required="true" autocomplete="off">
+                                        <div class="form-group pull-in clearfix">
+                                            <div class="col-sm-12">
+                                                <label>รหัสสินค้า</label>
+                                                <input type="text" name="no" class="form-control rounded parsley-validated"
+                                                    data-required="true" autocomplete="off">
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label>ชื่อ-สกุล พนักงาน</label>
-                                            <input type="text" name="name" class="form-control rounded parsley-validated"
-                                                data-required="true" autocomplete="off">
+                                        <div class="form-group pull-in clearfix">
+                                            <div class="col-sm-12">
+                                                <label>ชื่อสินค้า</label>
+                                                <input type="text" name="name" class="form-control rounded parsley-validated"
+                                                    data-required="true" autocomplete="off">
+                                            </div>
                                         </div>
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-6">
-                                                <label>รหัสผ่าน</label>
-                                                <input type="password" name="password" class="form-control rounded parsley-validated"
-                                                    data-required="true" id="pwd" autocomplete="off">
+                                                <label>ราคาขายส่ง</label>
+                                                <input type="text" name="vip_price" class="form-control rounded parsley-validated"
+                                                    autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
-                                                <label>ยืนยันรหัสผ่าน</label>
-                                                <input type="password" name="re-password" class="form-control rounded parsley-validated"
-                                                    data-equalto="#pwd" data-required="true" autocomplete="off">
+                                                <label>ราคาขายปลีก</label>
+                                                <input type="text" name="normal_price" class="form-control rounded parsley-validated"
+                                                    autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="form-group pull-in clearfix">
+                                            <div class="col-sm-12">
+                                                <br>
+                                                <label>หมวดหมู่</label>
+                                                <select name="category" class="form-control rounded m-b">
+                                                    <?php while ($row = mysqli_fetch_assoc($categories)) {
+                                                        echo "<option value='". $row['category_id'] ."'>". $row['category_name'] ."</option>";
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                     <footer class="panel-footer text-right bg-light lter">
                                         <button type="submit" name="action" value="add" class="btn btn-success btn-s-xs">บันทึก</button>
-                                        <a href="/stock/employee/" class="btn bg-danger btn-s-xs">กลับ</a>
+                                        <a href="/stock/product/" class="btn bg-danger btn-s-xs">กลับ</a>
                                     </footer>
                                 </section>
                             </form>

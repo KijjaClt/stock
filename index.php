@@ -7,7 +7,7 @@ if (isset($_POST["action"])) {
     $result = $db->query("SELECT * FROM employee");
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
-            if ($row["username"] == $_POST["username"] && $row["password"] == $_POST["password"]) {
+            if ($row["username"] == $_POST["username"] && $row["password"] == md5($_POST["password"])) {
                 header("location: dashboard/");
             } else {
                 break;

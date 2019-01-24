@@ -61,7 +61,7 @@ if (isset($_POST["action"])) {
                                     </header>
                                     <div class="panel-body">
                                         <div class="form-group">
-                                            <label>ชื่อหมวดหมู๋</label>
+                                            <label>ชื่อหมวดหมู่</label>
                                             <input type="hidden" value="<?= $_GET["id"]; ?>" name="id">
                                             <input type="text" value="<?= $row["category_name"]; ?>" name="name" class="form-control rounded parsley-validated"
                                                 data-required="true" autocomplete="off">
