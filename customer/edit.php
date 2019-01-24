@@ -6,18 +6,21 @@ if (isset($_POST["action"])) {
     $db->connect();
 
     $id = $_POST["id"];
-    $name = $_POST["name"];
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-    $sql = "UPDATE employee SET employee_name = '" . $name . "', username = '" . $username . "', `password` = '" . $password . "' WHERE employee_id = " . $id . ";";
+    $firstName = $_POST["first-name"];
+    $lastName = $_POST["last-name"];
+    $address = $_POST["address"];
+    $tel = $_POST["tel"];
+    $type = $_POST["type"];
+    $sql = "UPDATE customer SET customer_name = '" . $firstName . "', customer_lastname = '" . $lastName . "', customer_address = '" . $address . "', customer_tel = '" . $tel . "', customer_type = '" . $type . "' WHERE customer_id = " . $id . ";";
     $result = $db->query($sql);
-    header("location: /stock/employee");
+    header("location: /stock/customer");
+
     $db->close();
 } else {
     $db = new DB();
     $db->connect();
 
-    $result = $db->query("SELECT * FROM employee WHERE employee_id='".$_GET["id"]."';");
+    $result = $db->query("SELECT * FROM customer WHERE customer_id='".$_GET["id"]."';");
     $row = mysqli_fetch_assoc($result);
     
     $db->close();
@@ -46,7 +49,7 @@ if (isset($_POST["action"])) {
 
 <body>
     <section class="hbox stretch">
-    <?php include_once $_SERVER['DOCUMENT_ROOT'].'/stock/views/sidebar.php'; ?>
+        <?php include_once $_SERVER['DOCUMENT_ROOT'].'/stock/views/sidebar.php'; ?>
         <!-- .vbox -->
         <section id="content">
             <section class="vbox">
@@ -59,36 +62,47 @@ if (isset($_POST["action"])) {
                             <form method="post" action="edit.php" data-validate="parsley">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        <span class="h4">แก้ไขพนักงาน</span>
+                                        <span class="h4">แก้ไขลูกค้า</span>
                                     </header>
                                     <div class="panel-body">
-                                        <div class="form-group">
-                                            <label>ชื่อผู้ใช้งาน</label>
-                                            <input type="hidden" value="<?= $_GET["id"]; ?>" name="id">
-                                            <input type="text" value="<?= $row["username"]; ?>" name="username" class="form-control rounded parsley-validated"
-                                                data-required="true" autocomplete="off" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>ชื่อ-สกุล พนักงาน</label>
-                                            <input type="text" value="<?= $row["employee_name"]; ?>" name="name" class="form-control rounded parsley-validated"
-                                                data-required="true" autocomplete="off">
+                                        <div class="form-group pull-in clearfix">
+                                            <div class="col-sm-6">
+                                                <label>ชื่อ</label>
+                                                <input type="hidden" value="<?= $_GET["id"]; ?>" name="id">
+                                                <input type="text" value="<?= $row["customer_name"]; ?>" name="first-name" class="form-control rounded parsley-validated"
+                                                    data-required="true" autocomplete="off">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label>นามสกุล</label>
+                                                <input type="text" value="<?= $row["customer_lastname"]; ?>" name="last-name" class="form-control rounded parsley-validated"
+                                                    data-required="true" autocomplete="off">
+                                            </div>
                                         </div>
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-6">
-                                                <label>รหัสผ่าน</label>
-                                                <input type="password" name="password" class="form-control rounded parsley-validated"
-                                                    data-required="true" id="pwd" autocomplete="off">
+                                                <label>ที่อยู่</label>
+                                                <textarea name="address" class="form-control" data-required="true"
+                                                    autocomplete="off" cols="30" rows="7"><?= $row["customer_address"]; ?></textarea>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label>ยืนยันรหัสผ่าน</label>
-                                                <input type="password" name="re-password" class="form-control rounded parsley-validated"
-                                                    data-equalto="#pwd" data-required="true" autocomplete="off">
+                                                <br>
+                                                <label>เบอร์โทรศัพท์</label>
+                                                <input type="text" value="<?= $row["customer_tel"]; ?>" name="tel" class="form-control rounded parsley-validated"
+                                                    data-required="true" autocomplete="off">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <br>
+                                                <label>สถานะ</label>
+                                                <select name="type" class="form-control rounded m-b">
+                                                    <option value="0" <?= ($row["customer_type"] == 0) ? "selected" : "" ?>>Normal</option>
+                                                    <option value="1" <?= ($row["customer_type"] == 1) ? "selected" : "" ?>>VIP</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                     <footer class="panel-footer text-right bg-light lter">
                                         <button type="submit" name="action" value="add" class="btn btn-success btn-s-xs">บันทึก</button>
-                                        <a href="/stock/employee/" class="btn bg-danger btn-s-xs">กลับ</a>
+                                        <a href="/stock/customer/" class="btn bg-danger btn-s-xs">กลับ</a>
                                     </footer>
                                 </section>
                             </form>

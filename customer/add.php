@@ -11,9 +11,7 @@ if (isset($_POST["action"])) {
     $tel = $_POST["tel"];
     $type = $_POST["type"];
     $sql = "INSERT INTO customer (customer_id, customer_name, customer_lastname, customer_address, customer_tel, create_date, customer_picture, customer_type) VALUES (NULL, '" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $tel . "', '" . date("Y-m-d H:i:s") . "', NULL, '" . $type . "');";
-
-    // var_dump($sql);die;
-
+    
     $result = $db->query($sql);
     if ($result) {
         echo '<div class="alert alert-success">'.
