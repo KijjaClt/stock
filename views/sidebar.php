@@ -68,7 +68,7 @@
                     <li>
                         <a href="/stock/contact">
                             <i class="icon-user"></i>
-                            <span>ลูกค้า</span>
+                            <span>ลูกค้า/คู่ค้า</span>
                         </a>
                     </li>
                     <li>

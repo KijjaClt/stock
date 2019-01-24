@@ -76,7 +76,7 @@ if (isset($_POST["action"])) {
                                             <div class="col-sm-6">
                                                 <label>นามสกุล</label>
                                                 <input type="text" name="last-name" class="form-control rounded parsley-validated"
-                                                    data-required="true" autocomplete="off">
+                                                    autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="form-group pull-in clearfix">
