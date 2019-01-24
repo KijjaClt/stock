@@ -1,28 +1,28 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
 
-if (isset($_POST["action"])) {
-    $db = new DB();
-    $db->connect();
+// if (isset($_POST["action"])) {
+//     $db = new DB();
+//     $db->connect();
 
-    $firstName = $_POST["first-name"];
-    $lastName = $_POST["last-name"];
-    $address = $_POST["address"];
-    $tel = $_POST["tel"];
-    $type = $_POST["type"];
-    $sql = "INSERT INTO buy (buy_id, buy_name, buy_lastname, buy_address, buy_tel, create_date, buy_picture, buy_type) VALUES (NULL, '" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $tel . "', '" . date("Y-m-d H:i:s") . "', NULL, '" . $type . "');";
+//     $firstName = $_POST["first-name"];
+//     $lastName = $_POST["last-name"];
+//     $address = $_POST["address"];
+//     $tel = $_POST["tel"];
+//     $type = $_POST["type"];
+//     $sql = "INSERT INTO buy (buy_id, buy_name, buy_lastname, buy_address, buy_tel, create_date, buy_picture, buy_type) VALUES (NULL, '" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $tel . "', '" . date("Y-m-d H:i:s") . "', NULL, '" . $type . "');";
     
-    $result = $db->query($sql);
-    header("location: /stock/buy/list");
+//     $result = $db->query($sql);
+//     header("location: /stock/buy/list");
 
-    $db->close();
-} else {
+//     $db->close();
+// } else {
     $db = new DB();
     $db->connect();
     $contacts = $db->query("SELECT * FROM contact WHERE contact_type='0'");
     $products = $db->query("SELECT * FROM product WHERE 1");
     $db->close();
-}
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +57,7 @@ if (isset($_POST["action"])) {
                 <section class="scrollable wrapper">
                     <div class="row">
                         <div class="col-sm-12">
-                            <form method="post" action="add.php" data-validate="parsley">
+                            <form method="post" action="index.php" data-validate="parsley">
                                 <section class="panel">
                                     <header class="panel-heading">
                                         <span class="h4">สร้างรายการซื้อ</span>
@@ -92,7 +92,7 @@ if (isset($_POST["action"])) {
                                                     
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        <a href="#" class="btn bg-success pull-right"><i class="icon-plus"></i>เพิ่มลูกค้า</a>
+                                        <a href="#" class="btn bg-primary pull-right"><i class="icon-plus"></i>เพิ่มสินค้า</a>
                                         <h4>สินค้า</h4>
                                     </header>
                                     <div class="panel-body">

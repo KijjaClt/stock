@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 24, 2019 at 04:23 AM
+-- Generation Time: Jan 24, 2019 at 07:32 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -29,11 +29,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `buy` (
-  `buy_id` int(11) NOT NULL,
+  `buy_id` varchar(45) NOT NULL,
   `buy_date` datetime NOT NULL,
   `net_price` decimal(6,2) NOT NULL,
+  `contact_id` int(11) NOT NULL,
   `employee_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `buy`
+--
+
+INSERT INTO `buy` (`buy_id`, `buy_date`, `net_price`, `contact_id`, `employee_id`) VALUES
+('PO-20190124001', '2019-01-24 12:17:09', '36.00', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -42,11 +50,18 @@ CREATE TABLE `buy` (
 --
 
 CREATE TABLE `buy_detail` (
-  `buy_id` int(11) NOT NULL,
+  `buy_id` varchar(45) NOT NULL,
   `product_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `price` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `buy_detail`
+--
+
+INSERT INTO `buy_detail` (`buy_id`, `product_id`, `amount`, `price`) VALUES
+('PO-20190124001', 1, 12, '3.00');
 
 -- --------------------------------------------------------
 
@@ -65,31 +80,33 @@ CREATE TABLE `category` (
 
 INSERT INTO `category` (`category_id`, `category_name`) VALUES
 (1, 'อาหาร'),
-(3, 'เครื่องดื่ม');
+(3, 'เครื่องดื่ม'),
+(4, 'ขนม');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
+-- Table structure for table `contact`
 --
 
-CREATE TABLE `customer` (
-  `customer_id` int(11) NOT NULL,
-  `customer_name` varchar(50) NOT NULL,
-  `customer_lastname` varchar(50) DEFAULT NULL,
-  `customer_address` varchar(100) DEFAULT NULL,
-  `customer_tel` varchar(20) NOT NULL,
+CREATE TABLE `contact` (
+  `contact_id` int(11) NOT NULL,
+  `contact_name` varchar(50) NOT NULL,
+  `contact_lastname` varchar(50) DEFAULT NULL,
+  `contact_address` varchar(100) DEFAULT NULL,
+  `contact_tel` varchar(20) NOT NULL,
   `create_date` datetime NOT NULL,
-  `customer_picture` varchar(100) DEFAULT NULL,
-  `customer_type` int(11) DEFAULT NULL
+  `contact_picture` varchar(100) DEFAULT NULL,
+  `contact_type` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `customer`
+-- Dumping data for table `contact`
 --
 
-INSERT INTO `customer` (`customer_id`, `customer_name`, `customer_lastname`, `customer_address`, `customer_tel`, `create_date`, `customer_picture`, `customer_type`) VALUES
-(1, 'สมศรี', 'มีชัย', '114/33 หมู่ที่ 1, ตำบลเสม็ด อำเภอเมืองชลบุรี จังหวัดชลบุรี, 20000', '026390064', '2019-01-05 00:00:00', NULL, 1);
+INSERT INTO `contact` (`contact_id`, `contact_name`, `contact_lastname`, `contact_address`, `contact_tel`, `create_date`, `contact_picture`, `contact_type`) VALUES
+(1, 'สมศรี', 'มีชัย', '114/33 หมู่ที่ 1, ตำบลเสม็ด อำเภอเมืองชลบุรี จังหวัดชลบุรี, 20000', '026-390064', '2019-01-05 00:00:00', NULL, 1),
+(5, 'บริษัทเป๊ปซี่-โคล่า (ไทย) เทรดดิ้ง จำกัด', '', '99/9-10 ถนนเชียงใหม่-ลำปาง หมู่ 11 ต.อุโมงค์ อ.เมือง จ.ลำพูน 51150', '053-569800', '2019-01-24 11:27:35', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -111,8 +128,7 @@ CREATE TABLE `employee` (
 
 INSERT INTO `employee` (`employee_id`, `employee_name`, `employee_lastname`, `username`, `password`) VALUES
 (1, 'Administrator', '', 'admin', '81dc9bdb52d04dc20036dbd8313ed055'),
-(8, 'Employee First', '', 'emp1', '81dc9bdb52d04dc20036dbd8313ed055'),
-(10, 'xxx', '', 'xxx', '81dc9bdb52d04dc20036dbd8313ed055');
+(8, 'Employee First', '', 'emp1', '81dc9bdb52d04dc20036dbd8313ed055');
 
 -- --------------------------------------------------------
 
@@ -136,17 +152,17 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `product_no`, `product_name`, `product_cost`, `product_normal_price`, `product_vip_price`, `product_amount`, `category_id`) VALUES
-(1, '0100278000101', 'เลย์', '3.00', '6.00', '5.00', 99, 1),
-(2, '0100278000101', 'เลย์', '4.00', '7.00', '6.00', 20, 1);
+(1, 'P0001', 'เลย์', '3.00', '6.00', '5.00', 12, 4),
+(6, 'P0002', 'ฟริสโต', NULL, '5.00', '4.00', 0, 4);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `return`
+-- Table structure for table `returns`
 --
 
-CREATE TABLE `return` (
-  `sale_id` int(11) NOT NULL,
+CREATE TABLE `returns` (
+  `sale_id` varchar(45) NOT NULL,
   `product_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `comment` varchar(100) DEFAULT NULL,
@@ -160,8 +176,8 @@ CREATE TABLE `return` (
 --
 
 CREATE TABLE `sale` (
-  `sale_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `sale_id` varchar(45) NOT NULL,
+  `contact_id` int(11) NOT NULL,
   `sale_date` datetime DEFAULT NULL,
   `net_price` decimal(6,2) NOT NULL,
   `net_discount` decimal(6,2) DEFAULT NULL,
@@ -175,7 +191,7 @@ CREATE TABLE `sale` (
 --
 
 CREATE TABLE `sale_detail` (
-  `sale_id` int(11) NOT NULL,
+  `sale_id` varchar(45) NOT NULL,
   `product_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `price` decimal(6,2) NOT NULL,
@@ -207,10 +223,10 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`category_id`);
 
 --
--- Indexes for table `customer`
+-- Indexes for table `contact`
 --
-ALTER TABLE `customer`
-  ADD PRIMARY KEY (`customer_id`);
+ALTER TABLE `contact`
+  ADD PRIMARY KEY (`contact_id`);
 
 --
 -- Indexes for table `employee`
@@ -227,24 +243,24 @@ ALTER TABLE `product`
   ADD KEY `category_id` (`category_id`);
 
 --
--- Indexes for table `return`
+-- Indexes for table `returns`
 --
-ALTER TABLE `return`
-  ADD PRIMARY KEY (`sale_id`,`product_id`),
+ALTER TABLE `returns`
+  ADD PRIMARY KEY (`product_id`,`sale_id`) USING BTREE,
   ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `sale`
 --
 ALTER TABLE `sale`
-  ADD PRIMARY KEY (`sale_id`,`customer_id`),
-  ADD KEY `customer_id` (`customer_id`);
+  ADD PRIMARY KEY (`sale_id`,`contact_id`),
+  ADD KEY `contact_id` (`contact_id`) USING BTREE;
 
 --
 -- Indexes for table `sale_detail`
 --
 ALTER TABLE `sale_detail`
-  ADD PRIMARY KEY (`sale_id`,`product_id`),
+  ADD PRIMARY KEY (`product_id`,`sale_id`) USING BTREE,
   ADD KEY `product_id` (`product_id`);
 
 --
@@ -252,40 +268,28 @@ ALTER TABLE `sale_detail`
 --
 
 --
--- AUTO_INCREMENT for table `buy`
---
-ALTER TABLE `buy`
-  MODIFY `buy_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `customer`
+-- AUTO_INCREMENT for table `contact`
 --
-ALTER TABLE `customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `contact`
+  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `sale`
---
-ALTER TABLE `sale`
-  MODIFY `sale_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -295,14 +299,14 @@ ALTER TABLE `sale`
 -- Constraints for table `buy`
 --
 ALTER TABLE `buy`
-  ADD CONSTRAINT `buy_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`);
+  ADD CONSTRAINT `buy_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `buy_detail`
 --
 ALTER TABLE `buy_detail`
-  ADD CONSTRAINT `buy_detail_ibfk_1` FOREIGN KEY (`buy_id`) REFERENCES `buy` (`buy_id`),
-  ADD CONSTRAINT `buy_detail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
+  ADD CONSTRAINT `buy_detail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
+  ADD CONSTRAINT `buy_detail_ibfk_3` FOREIGN KEY (`buy_id`) REFERENCES `buy` (`buy_id`);
 
 --
 -- Constraints for table `product`
@@ -311,24 +315,22 @@ ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`);
 
 --
--- Constraints for table `return`
+-- Constraints for table `returns`
 --
-ALTER TABLE `return`
-  ADD CONSTRAINT `return_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
-  ADD CONSTRAINT `return_ibfk_2` FOREIGN KEY (`sale_id`) REFERENCES `sale` (`sale_id`);
+ALTER TABLE `returns`
+  ADD CONSTRAINT `returns_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
 
 --
 -- Constraints for table `sale`
 --
 ALTER TABLE `sale`
-  ADD CONSTRAINT `sale_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`);
+  ADD CONSTRAINT `sale_ibfk_1` FOREIGN KEY (`contact_id`) REFERENCES `contact` (`contact_id`);
 
 --
 -- Constraints for table `sale_detail`
 --
 ALTER TABLE `sale_detail`
-  ADD CONSTRAINT `sale_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
-  ADD CONSTRAINT `sale_detail_ibfk_2` FOREIGN KEY (`sale_id`) REFERENCES `sale` (`sale_id`);
+  ADD CONSTRAINT `sale_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

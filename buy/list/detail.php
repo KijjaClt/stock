@@ -53,7 +53,8 @@ $db->close();
             <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">
-                  <h4>รายละเอียดรายการซื้อ</h4>
+                  <a href="/stock/buy/list" class="btn bg-info pull-right">กลับ</a>
+                  <h4>รายละเอียดรายการ: <?= $_GET["id"] ?></h4>
                 </header>
                 <div class="table-responsive">
                   <table class="table table-striped b-t text-sm">
@@ -63,7 +64,7 @@ $db->close();
                         <th>รหัสสินค้า</th>
                         <th>ชื่อสินค้า</th>
                         <th>จำนวน</th>
-                        <th>มูลค่าต่อหน่วย</th>
+                        <th>ราคาต่อหน่วย</th>
                         <th>รวม</th>
                       </tr>
                     </thead>
