@@ -1,28 +1,29 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
 
-// if (isset($_POST["action"])) {
-//     $db = new DB();
-//     $db->connect();
+if (isset($_POST["action"])) {
+    $db = new DB();
+    $db->connect();
 
-//     $firstName = $_POST["first-name"];
-//     $lastName = $_POST["last-name"];
-//     $address = $_POST["address"];
-//     $tel = $_POST["tel"];
-//     $type = $_POST["type"];
-//     $sql = "INSERT INTO buy (buy_id, buy_name, buy_lastname, buy_address, buy_tel, create_date, buy_picture, buy_type) VALUES (NULL, '" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $tel . "', '" . date("Y-m-d H:i:s") . "', NULL, '" . $type . "');";
+    $firstName = $_POST["first-name"];
+    $lastName = $_POST["last-name"];
+    $address = $_POST["address"];
+    $tel = $_POST["tel"];
+    $type = $_POST["type"];
+    $sql = "INSERT INTO buy (buy_id, buy_name, buy_lastname, buy_address, buy_tel, create_date, buy_picture, buy_type) VALUES (NULL, '" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $tel . "', '" . date("Y-m-d H:i:s") . "', NULL, '" . $type . "');";
     
-//     $result = $db->query($sql);
-//     header("location: /stock/buy/list");
+    echo $sql; die;
+    $result = $db->query($sql);
+    header("location: /stock/buy/list");
 
-//     $db->close();
-// } else {
+    $db->close();
+} else {
     $db = new DB();
     $db->connect();
     $contacts = $db->query("SELECT * FROM contact WHERE contact_type='0'");
     $products = $db->query("SELECT * FROM product WHERE 1");
     $db->close();
-// }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
