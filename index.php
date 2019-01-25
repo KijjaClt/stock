@@ -4,7 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
 if (isset($_POST["action"])) {
     $db = new DB();
     $db->connect();
-    $result = $db->query("SELECT * FROM employee");
+    $result = $db->query("SELECT * FROM employee WHERE username = '".$_POST["username"]."'");
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
             if ($row["username"] == $_POST["username"] && $row["password"] == md5($_POST["password"])) {

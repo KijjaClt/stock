@@ -66,7 +66,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-6">
                                                 <label>รายการ</label>
-                                                <input type="text" name="id" class="form-control rounded parsley-validated"
+                                                <input type="text" value="<?= 'PO-'.date('Ymd').'-'; ?>" name="id" class="form-control rounded parsley-validated"
                                                     data-required="true" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
@@ -83,7 +83,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-6">
                                                 <label>วันที่ทำรายการ</label>
-                                                <input type="date" name="date" class="form-control rounded parsley-validated"
+                                                <input type="date" value="<?= date('Y-m-d'); ?>" name="date" class="form-control rounded parsley-validated"
                                                     data-required="true" autocomplete="off">
                                             </div>
                                         </div>
@@ -91,8 +91,8 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
                                 </section>
                                                     
                                 <section class="panel">
-                                    <header class="panel-heading">
-                                        <a href="#" class="btn bg-primary pull-right"><i class="icon-plus"></i>เพิ่มสินค้า</a>
+                                    <header id="product-list" class="panel-heading">
+                                        <a href="#" onclick="addProductSection();" class="btn bg-primary pull-right"><i class="icon-plus"></i>เพิ่มสินค้า</a>
                                         <h4>สินค้า</h4>
                                     </header>
                                     <div class="panel-body">
@@ -110,17 +110,18 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-6">
                                                 <label>จำนวน</label>
-                                                <input type="text" name="amount" class="form-control rounded parsley-validated"
+                                                <input type="text" id="amount" name="amount" class="form-control rounded parsley-validated"
                                                     data-required="true" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>ราคาต่อหน่วย</label>
-                                                <input type="text" name="price" class="form-control rounded parsley-validated"
+                                                <input type="text" id="price" name="price" class="form-control rounded parsley-validated"
                                                     data-required="true" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
                                     <footer class="panel-footer text-right bg-light lter">
+                                        <b style="margin-right: 30px;">มูลค่ารวม: <u id="total">36</u> บาท</b>
                                         <button type="submit" name="action" value="add" class="btn btn-success btn-s-xs">บันทึก</button>
                                         <a href="/stock/buy/list" class="btn bg-danger btn-s-xs">กลับ</a>
                                     </footer>
@@ -141,6 +142,46 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
         <!-- parsley -->
         <script src="/stock/asset/js/parsley/parsley.min.js" cache="false"></script>
         <script src="/stock/asset/js/parsley/parsley.extend.js" cache="false"></script>
+
+        <script>
+            $(document).ready(function(){
+                $('#amount, #price').change(function(){
+                    var amount = $('#amount').val();
+                    var price = $('#price').val();
+
+                    if ((amount.length > 0 && price.length > 0) &&  ($.isNumeric(amount) && $.isNumeric(price))) {
+                        $('#total').html(amount * price)
+                    } else {
+                        $('#total').html("-")
+                    }
+                });
+            });
+            function addProductSection() {
+                $("#product-list").append(
+                    '<hr>'+
+                    '<div class="form-group pull-in clearfix">'+
+                        '<div class="col-sm-12">'+
+                            '<label>เลือกสินค้า</label>'+
+                            '<select name="product" class="form-control rounded m-b">'+
+                                
+                            '</select>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="form-group pull-in clearfix">'+
+                        '<div class="col-sm-6">'+
+                            '<label>จำนวน</label>'+
+                            '<input type="text" name="amount" class="form-control rounded parsley-validated"'+
+                                'data-required="true" autocomplete="off">'+
+                        '</div>'+
+                        '<div class="col-sm-6">'+
+                            '<label>ราคาต่อหน่วย</label>'+
+                            '<input type="text" name="price" class="form-control rounded parsley-validated"'+
+                                'data-required="true" autocomplete="off">'+
+                        '</div>'+
+                    '</div>'
+                );
+            }
+        </script>
 </body>
 
 </html>
