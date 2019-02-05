@@ -20,16 +20,17 @@ if (isset($_POST["action"])) {
                     " . $total . ", 
                     '" . $contact . "', 
                     '" . 1 . "');";
+    $result = $db->query($sqlBuy);
 
     $sqlDetail = "INSERT INTO buy_detail (buy_id, product_id, amount, price) 
-            VALUES ('" . $id . "', 
-                    " . $product . ", 
-                    " . $amount . ", 
-                    '" . $price . "');";
-    
-    echo $sqlDetail;die;
-
-    $result = $db->query($sql);
+        VALUES ('" . $id . "', 
+                " . $product . ", 
+                " . $amount . ", 
+                '" . $price . "');";
+    $result = $db->query($sqlDetail);
+        
+    $sqlUpdate = "UPDATE product SET product_amount = product_amount+" . $amount . " WHERE product_id = " . $product . ";";
+    $result = $db->query($sqlUpdate);
     header("location: /stock/buy/list");
 
     $db->close();
