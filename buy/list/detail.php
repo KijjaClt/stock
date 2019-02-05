@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
 
 $db = new DB();
 $db->connect();
-$result = $db->query("SELECT * FROM buy_detail NATURAL JOIN product");
+$result = $db->query("SELECT * FROM buy_detail NATURAL JOIN product WHERE buy_id='". $_GET['id'] ."'");
 $db->close();
 ?>
 

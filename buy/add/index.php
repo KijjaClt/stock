@@ -5,14 +5,30 @@ if (isset($_POST["action"])) {
     $db = new DB();
     $db->connect();
 
-    $firstName = $_POST["first-name"];
-    $lastName = $_POST["last-name"];
-    $address = $_POST["address"];
-    $tel = $_POST["tel"];
-    $type = $_POST["type"];
-    $sql = "INSERT INTO buy (buy_id, buy_name, buy_lastname, buy_address, buy_tel, create_date, buy_picture, buy_type) VALUES (NULL, '" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $tel . "', '" . date("Y-m-d H:i:s") . "', NULL, '" . $type . "');";
+    $id = $_POST["id"];
+    $contact = $_POST["contact"];
+    $date = $_POST["date"];
+    $total = $_POST["total"];
+
+    $product = $_POST["product"];
+    $amount = $_POST["amount"];
+    $price = $_POST["price"];
+
+    $sqlBuy = "INSERT INTO buy (buy_id, buy_date, net_price, contact_id, employee_id) 
+            VALUES ('" . $id . "', 
+                    '" . $date . "', 
+                    " . $total . ", 
+                    '" . $contact . "', 
+                    '" . 1 . "');";
+
+    $sqlDetail = "INSERT INTO buy_detail (buy_id, product_id, amount, price) 
+            VALUES ('" . $id . "', 
+                    " . $product . ", 
+                    " . $amount . ", 
+                    '" . $price . "');";
     
-    echo $sql; die;
+    echo $sqlDetail;die;
+
     $result = $db->query($sql);
     header("location: /stock/buy/list");
 
@@ -92,11 +108,11 @@ if (isset($_POST["action"])) {
                                 </section>
                                                     
                                 <section class="panel">
-                                    <header id="product-list" class="panel-heading">
-                                        <a href="#" onclick="addProductSection();" class="btn bg-primary pull-right"><i class="icon-plus"></i>เพิ่มสินค้า</a>
+                                    <header class="panel-heading">
+                                        <a href="#" class="btn bg-primary pull-right"><i class="icon-plus"></i>เพิ่มสินค้า</a>
                                         <h4>สินค้า</h4>
                                     </header>
-                                    <div class="panel-body">
+                                    <div class="panel-body" id="product-list">
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-12">
                                                 <label>เลือกสินค้า</label>
@@ -122,7 +138,8 @@ if (isset($_POST["action"])) {
                                         </div>
                                     </div>
                                     <footer class="panel-footer text-right bg-light lter">
-                                        <b style="margin-right: 30px;">มูลค่ารวม: <u id="total">36</u> บาท</b>
+                                        <input type="hidden" class="total" name="total">
+                                        <b style="margin-right: 30px;">มูลค่ารวม: <u class="total">-</u> บาท</b>
                                         <button type="submit" name="action" value="add" class="btn btn-success btn-s-xs">บันทึก</button>
                                         <a href="/stock/buy/list" class="btn bg-danger btn-s-xs">กลับ</a>
                                     </footer>
@@ -151,9 +168,11 @@ if (isset($_POST["action"])) {
                     var price = $('#price').val();
 
                     if ((amount.length > 0 && price.length > 0) &&  ($.isNumeric(amount) && $.isNumeric(price))) {
-                        $('#total').html(amount * price)
+                        $('.total').html(amount * price)
+                        $('.total').val(amount * price)
                     } else {
-                        $('#total').html("-")
+                        $('.total').val(0)
+                        $('.total').html("-")
                     }
                 });
             });
@@ -164,7 +183,7 @@ if (isset($_POST["action"])) {
                         '<div class="col-sm-12">'+
                             '<label>เลือกสินค้า</label>'+
                             '<select name="product" class="form-control rounded m-b">'+
-                                
+                                '<option>เลือกสินค้า</option>'+
                             '</select>'+
                         '</div>'+
                     '</div>'+
