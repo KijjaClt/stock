@@ -24,10 +24,10 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="/stock/sell/add">สร้างรายการขาย</a>
+                                <a href="/stock/sale/add">สร้างรายการขาย</a>
                             </li>
                             <li>
-                                <a href="/stock/sell/list">ดูรายการขาย</a>
+                                <a href="/stock/sale/list">ดูรายการขาย</a>
                             </li>
                         </ul>
                     </li>
