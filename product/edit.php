@@ -79,7 +79,7 @@ if (isset($_POST["action"])) {
                                                 <label>รหัสสินค้า</label>
                                                 <input type="hidden" value="<?= $_GET["id"]; ?>" name="id">
                                                 <input type="text" value="<?= $product["product_no"]; ?>" name="no" class="form-control rounded parsley-validated"
-                                                    data-required="true" autocomplete="off">
+                                                    data-required="true" autocomplete="off" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group pull-in clearfix">

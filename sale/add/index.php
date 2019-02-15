@@ -42,6 +42,10 @@ if (isset($_POST["action"])) {
     $db->connect();
     $contacts = $db->query("SELECT * FROM contact WHERE contact_type='1'");
     $products = $db->query("SELECT * FROM product WHERE 1");
+
+    $lastSOID = mysqli_fetch_assoc($db->query("SELECT sale_id FROM sale WHERE sale_id LIKE '%". date('Ymd') ."%' ORDER BY sale_id DESC LIMIT 1"))["sale_id"];
+    $newSOID = sprintf("SO-%s-%03d", date('Ymd'), intval(substr($lastSOID,12))+1);
+
     $db->close();
 }
 ?>
@@ -87,8 +91,8 @@ if (isset($_POST["action"])) {
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-6">
                                                 <label>รายการ</label>
-                                                <input type="text" value="<?= 'SO-'.date('Ymd').'-'; ?>" name="id" class="form-control rounded parsley-validated"
-                                                    data-required="true" autocomplete="off">
+                                                <input type="text" value="<?= $newSOID; ?>" name="id" class="form-control rounded parsley-validated"
+                                                    data-required="true" autocomplete="off" readonly>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>ลูกค้า</label>
@@ -132,12 +136,12 @@ if (isset($_POST["action"])) {
                                             <div class="col-sm-6">
                                                 <label>จำนวน</label>
                                                 <input type="text" id="amount" name="amount" class="form-control rounded parsley-validated"
-                                                    data-required="true" autocomplete="off">
+                                                    data-min="1" data-type="number" data-required="true" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>ราคาต่อหน่วย</label>
                                                 <input type="text" id="price" name="price" class="form-control rounded parsley-validated"
-                                                    data-required="true" autocomplete="off">
+                                                    data-min="1" data-type="number" data-required="true" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>

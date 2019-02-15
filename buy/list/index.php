@@ -81,7 +81,7 @@ $db->close();
                           <p><a class="hover" href="detail.php?id=<?= $row["buy_id"]?>"><?= $row["buy_id"]?></a></p>
                         </td>
                         <td>
-                          <p><?= $row["buy_date"]; ?></p>
+                          <p><?= date('Y-m-d', strtotime($row["buy_date"])); ?></p>
                         </td>
                         <td>
                           <p><?= $row["contact_name"]; ?></p>

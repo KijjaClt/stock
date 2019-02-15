@@ -86,7 +86,7 @@ if (isset($_POST["action"])) {
                                             <div class="col-sm-12">
                                                 <label>รหัสสินค้า</label>
                                                 <input type="text" value="<?= $newProductNO ?>" name="no" class="form-control rounded parsley-validated"
-                                                    data-required="true" autocomplete="off">
+                                                    data-required="true" autocomplete="off" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group pull-in clearfix">
@@ -100,12 +100,12 @@ if (isset($_POST["action"])) {
                                             <div class="col-sm-6">
                                                 <label>ราคาขายส่ง</label>
                                                 <input type="text" name="vip_price" class="form-control rounded parsley-validated"
-                                                    data-min="1" data-type="number"autocomplete="off">
+                                                    data-min="1" data-type="number" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>ราคาขายปลีก</label>
                                                 <input type="text" name="normal_price" class="form-control rounded parsley-validated"
-                                                    data-min="1" data-type="number"autocomplete="off">
+                                                    data-min="1" data-type="number" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="form-group pull-in clearfix">

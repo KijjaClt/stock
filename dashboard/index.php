@@ -39,25 +39,46 @@
                       <p>
                         <div class="col-lg-3">
                           <p><b>ยอดขายวันนี้</b></p>
-                          <p>2,000 บาท</p>
+                          <p>-</p>
                         </div>
                         <div class="col-lg-3">
                           <p><b>ยอดขายเดือนนี้</b></p>
-                          <p>10,000 บาท</p>
+                          <p>-</p>
                         </div>
                         <div class="col-lg-3">
                           <p><b>ยอดขายรวมทั้งปี</b></p>
-                          <p>230,000 บาท</p>
+                          <p>-</p>
                         </div>
                         <div class="col-lg-3">
                           <p><b>หมวดหมู่ขายดีปีนี้</b></p>
-                          <p>กระเป๋า</p>
+                          <p>-</p>
                         </div>
                       </p>
                     </div>
                   </section>
                 </div>
               </div>
+              <section class="panel">
+                <header class="panel-heading">
+                  <h4>สรุปผลประกอบการ</h4>
+                </header>
+                <div class="panel-body">
+                  <p>
+                    <div class="col-lg-4">
+                      <p><b>ยอดขาย</b></p>
+                      <p>-</p>
+                    </div>
+                    <div class="col-lg-4">
+                      <p><b>ต้นทุน</b></p>
+                      <p>-</p>
+                    </div>
+                    <div class="col-lg-4">
+                      <p><b>กำไร/ขาดทุน</b></p>
+                      <p>-</p>
+                    </div>
+                  </p>
+                </div>
+              </section>
               <section class="panel">
                 <header class="panel-heading">
                   <h4>สินค้าที่มีการเคลื่อนไหว</h4>
@@ -75,46 +96,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>P24222012548</td>
-                        <td>BALENCIAGA VILLE BAG</td>
-                        <td>5</td>
-                        <td>4</td>
-                        <td>1</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>P24222038574</td>
-                        <td>LOEWE BASKET BAG</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>2</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>P24222052145</td>
-                        <td>CHLOE RYLEE BOOTS</td>
-                        <td>10</td>
-                        <td>6</td>
-                        <td>4</td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td>P24222068754</td>
-                        <td>BLAZE JACKET</td>
-                        <td>12</td>
-                        <td>12</td>
-                        <td>0</td>
-                      </tr>
-                      <tr>
-                        <td>5</td>
-                        <td>P24222058562</td>
-                        <td>MICHAEL HALPERN SEQUINNED TOP</td>
-                        <td>8</td>
-                        <td>6</td>
-                        <td>2</td>
-                      </tr>
+                      
                     </tbody>
                   </table>
                 </div>
