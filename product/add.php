@@ -38,6 +38,8 @@ if (isset($_POST["action"])) {
     $db = new DB();
     $db->connect();
     $categories = $db->query("SELECT * FROM category");
+    $lastProductNO = mysqli_fetch_assoc($db->query("SELECT product_no FROM product ORDER BY product_no DESC LIMIT 1"))["product_no"];
+    $newProductNO = sprintf("P%04d", intval(substr($lastProductNO,1))+1);
     $db->close();
 }
 ?>
@@ -83,7 +85,7 @@ if (isset($_POST["action"])) {
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-12">
                                                 <label>รหัสสินค้า</label>
-                                                <input type="text" name="no" class="form-control rounded parsley-validated"
+                                                <input type="text" value="<?= $newProductNO ?>" name="no" class="form-control rounded parsley-validated"
                                                     data-required="true" autocomplete="off">
                                             </div>
                                         </div>
@@ -98,12 +100,12 @@ if (isset($_POST["action"])) {
                                             <div class="col-sm-6">
                                                 <label>ราคาขายส่ง</label>
                                                 <input type="text" name="vip_price" class="form-control rounded parsley-validated"
-                                                    autocomplete="off">
+                                                    data-min="1" data-type="number"autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>ราคาขายปลีก</label>
                                                 <input type="text" name="normal_price" class="form-control rounded parsley-validated"
-                                                    autocomplete="off">
+                                                    data-min="1" data-type="number"autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="form-group pull-in clearfix">

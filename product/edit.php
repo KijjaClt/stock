@@ -93,12 +93,12 @@ if (isset($_POST["action"])) {
                                             <div class="col-sm-6">
                                                 <label>ราคาขายส่ง</label>
                                                 <input type="text" value="<?= $product["product_vip_price"]; ?>" name="vip_price" class="form-control rounded parsley-validated"
-                                                    autocomplete="off">
+                                                    data-min="1" data-type="number" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>ราคาขายปลีก</label>
                                                 <input type="text"  value="<?= $product["product_normal_price"]; ?>" name="normal_price" class="form-control rounded parsley-validated"
-                                                    autocomplete="off">
+                                                    data-min="1" data-type="number" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="form-group pull-in clearfix">

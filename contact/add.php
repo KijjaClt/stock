@@ -79,7 +79,7 @@ if (isset($_POST["action"])) {
                                                 <br>
                                                 <label>เบอร์โทรศัพท์</label>
                                                 <input type="text" name="tel" class="form-control rounded parsley-validated"
-                                                    data-required="true" autocomplete="off">
+                                                    data-required="true" data-type="phone" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
                                                 <br>
