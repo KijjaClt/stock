@@ -31,6 +31,8 @@ if (isset($_POST["action"])) {
     <title>แก้ไขพนักงาน</title>
     <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="shortcut icon" href="/stock/asset/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/stock/asset/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/stock/asset/css/bootstrap.css" type="text/css" />
     <link rel="stylesheet" href="/stock/asset/css/animate.css" type="text/css" />
     <link rel="stylesheet" href="/stock/asset/css/font-awesome.min.css" type="text/css" />
