@@ -8,17 +8,17 @@ if (isset($_POST["action"])) {
     $id = $_POST["id"];
     $no = $_POST["no"];
     $name = $_POST["name"];
+    $costPrice = ($_POST["cost_price"] != "") ? $_POST["cost_price"] : "NULL";
     $normalPrice = ($_POST["normal_price"] != "") ? $_POST["normal_price"] : "NULL";
-    $vipPrice = ($_POST["vip_price"] != "") ? $_POST["vip_price"] : "NULL";
     $category = $_POST["category"];
     $sql = "UPDATE product SET
                 product_no = '" . $no . "', 
                 product_name = '" . $name . "',
                 product_normal_price = " . $normalPrice . ",  
-                product_vip_price = " . $vipPrice . ",
+                product_cost = " . $costPrice . ",
                 category_id = " . $category . "
-            WHERE product_id = " . $id . "
-            ;";
+                WHERE product_id = " . $id . "
+                ;";
 
     $result = $db->query($sql);
     header("location: /stock/product");
@@ -88,17 +88,17 @@ if (isset($_POST["action"])) {
                                             <div class="col-sm-12">
                                                 <label>ชื่อสินค้า</label>
                                                 <input type="text" value="<?= $product["product_name"]; ?>" name="name" class="form-control rounded parsley-validated"
-                                                    data-regexp="^[a-zA-Z][a-zA-Z0-9.,$;]+$" data-required="true" autocomplete="off">
+                                                    data-required="true" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-6">
-                                                <label>ราคาขายส่ง</label>
-                                                <input type="text" value="<?= $product["product_vip_price"]; ?>" name="vip_price" class="form-control rounded parsley-validated"
+                                                <label>ราคาต้นทุน</label>
+                                                <input type="text" value="<?= $product["product_cost"]; ?>" name="cost_price" class="form-control rounded parsley-validated"
                                                     data-min="1" data-type="number" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
-                                                <label>ราคาขายปลีก</label>
+                                                <label>ราคาขาย</label>
                                                 <input type="text"  value="<?= $product["product_normal_price"]; ?>" name="normal_price" class="form-control rounded parsley-validated"
                                                     data-min="1" data-type="number" autocomplete="off">
                                             </div>

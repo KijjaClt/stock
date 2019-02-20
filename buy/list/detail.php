@@ -65,9 +65,9 @@ $db->close();
                         <th width="20">#</th>
                         <th>รหัสสินค้า</th>
                         <th>ชื่อสินค้า</th>
-                        <th>จำนวน</th>
-                        <th>ราคาต่อหน่วย</th>
-                        <th>รวม</th>
+                        <th>จำนวน (ชิ้น)</th>
+                        <th>ราคาต่อหน่วย (บาท)</th>
+                        <th>รวม (บาท)</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -93,7 +93,7 @@ $db->close();
                           <p><?= $row["price"]; ?></p>
                         </td>
                         <td>
-                          <p><?= $row["price"] * $row["amount"]; ?></p>
+                          <p><?= sprintf("%.02f",$row["price"] * $row["amount"]); ?></p>
                         </td>
                       </tr>
                       <?php $i++; }} ?>

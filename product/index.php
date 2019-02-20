@@ -55,8 +55,7 @@ $db->close();
                         <th>หมวดหมู่</th>
                         <th>ชื่อสินค้า</th>
                         <th>ราคาต้นทุน (บาท)</th>
-                        <th>ราคาขายส่ง (บาท)</th>
-                        <th>ราคาขายปลีก (บาท)</th>
+                        <th>ราคาขาย (บาท)</th>
                         <th>จำนวนสินค้า (ชิ้น)</th>
                         <th width="12%">ดำเนินการ</th>
                       </tr>
@@ -82,9 +81,6 @@ $db->close();
                         </td>
                         <td>
                           <p><?= ($row["product_cost"] == NULL) ? "-" : $row["product_cost"]; ?></p>
-                        </td>
-                        <td>
-                          <p><?= ($row["product_vip_price"] == NULL) ? "-" : $row["product_vip_price"]; ?></p>
                         </td>
                         <td>
                           <p><?= ($row["product_normal_price"] == NULL) ? "-" : $row["product_normal_price"]; ?></p>

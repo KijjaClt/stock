@@ -22,15 +22,18 @@ if (isset($_POST["action"])) {
                     '" . 1 . "');";
     $result = $db->query($sqlBuy);
 
-    $sqlDetail = "INSERT INTO buy_detail (buy_id, product_id, amount, price) 
+    for ($i=0; $i < sizeof($product); $i++) { 
+        $sqlDetail = "INSERT INTO buy_detail (buy_id, product_id, amount, price) 
         VALUES ('" . $id . "', 
-                " . $product . ", 
-                " . $amount . ", 
-                '" . $price . "');";
-    $result = $db->query($sqlDetail);
-        
-    $sqlUpdate = "UPDATE product SET product_amount = product_amount+" . $amount . " WHERE product_id = " . $product . ";";
-    $result = $db->query($sqlUpdate);
+                " . $product[$i] . ", 
+                " . $amount[$i] . ", 
+                '" . $price[$i] . "');";
+        $result = $db->query($sqlDetail);   
+
+        $sqlUpdate = "UPDATE product SET product_amount = product_amount+" . $amount[$i] . " WHERE product_id = " . $product[$i] . ";";
+        $result = $db->query($sqlUpdate);
+    }
+    
     header("location: /stock/buy/list");
 
     $db->close();
@@ -116,31 +119,34 @@ if (isset($_POST["action"])) {
                                                     
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        <a href="#" class="btn bg-primary pull-right"><i class="icon-plus"></i>เพิ่มสินค้า</a>
+                                        <a href="#" onclick="addProductSection()" class="btn bg-primary pull-right"><i class="icon-plus"></i>เพิ่มสินค้า</a>
                                         <h4>สินค้า</h4>
                                     </header>
                                     <div class="panel-body" id="product-list">
-                                        <div class="form-group pull-in clearfix">
-                                            <div class="col-sm-12">
-                                                <label>เลือกสินค้า</label>
-                                                <select name="product" class="form-control rounded m-b">
-                                                    <?php while ($row = mysqli_fetch_assoc($products)) {
-                                                        echo "<option value='". $row['product_id'] ."'>". $row['product_name'] ."</option>";
-                                                    }
-                                                    ?>
-                                                </select>
+                                        <div id="product-row">
+                                            <div class="form-group pull-in clearfix">
+                                                <div class="col-sm-12">
+                                                    <label>เลือกสินค้า</label>
+                                                    <select name="product[]" class="form-control rounded m-b parsley-validated" data-required="true">
+                                                        <option data-price='0.00' value>--- กรุณาเลือกสินค้า ---</option>
+                                                        <?php while ($row = mysqli_fetch_assoc($products)) {
+                                                            echo "<option data-price='". $row['product_cost'] ."' value='". $row['product_id'] ."'>". $row['product_name'] ."</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group pull-in clearfix">
-                                            <div class="col-sm-6">
-                                                <label>จำนวน</label>
-                                                <input type="text" id="amount" name="amount" class="form-control rounded parsley-validated"
-                                                    data-min="1" data-type="number" data-required="true" autocomplete="off">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label>ราคาต่อหน่วย</label>
-                                                <input type="text" id="price" name="price" class="form-control rounded parsley-validated"
-                                                    data-min="1" data-type="number" data-required="true" autocomplete="off">
+                                            <div class="form-group pull-in clearfix">
+                                                <div class="col-sm-6">
+                                                    <label>จำนวน</label>
+                                                    <input type="text" name="amount[]" class="form-control rounded parsley-validated"
+                                                        data-min="1" data-type="number" data-required="true" autocomplete="off">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label>ราคาต่อหน่วย</label>
+                                                    <input type="text" name="price[]" class="form-control rounded parsley-validated"
+                                                        data-type="number" autocomplete="off" readonly>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -169,43 +175,52 @@ if (isset($_POST["action"])) {
         <script src="/stock/asset/js/parsley/parsley.extend.js" cache="false"></script>
 
         <script>
-            $(document).ready(function(){
-                $('#amount, #price').change(function(){
-                    var amount = $('#amount').val();
-                    var price = $('#price').val();
+            var sum = 0;
 
-                    if ((amount.length > 0 && price.length > 0) &&  ($.isNumeric(amount) && $.isNumeric(price))) {
-                        $('.total').html(amount * price)
-                        $('.total').val(amount * price)
-                    } else {
-                        $('.total').val(0)
-                        $('.total').html("-")
-                    }
+            $(document).ready(function () {
+                $("select[name*='product']").each(function (i) {
+                    let price = $(this).children("option:selected").attr("data-price");
+                    $("input[name*='price']")[i].value = price;
+                    return true;
+                });
+                
+                $('#product-list').delegate("input[name*='amount']", 'keyup', function () {
+                    sum = 0;
+                    $("input[name*='amount']").each(function (i) {
+                        let amount = $(this).val();
+                        let price = $("input[name*='price']")[i].value;
+
+                        calcTotal(amount, price);
+                    });
+                });
+
+                $('#product-list').delegate("select[name*='product']", 'change', function () {
+                    $("select[name*='product']").each(function (i) {
+                        let price = $(this).children("option:selected").attr("data-price");
+                        $("input[name*='price']")[i].value = price;
+                        return true;
+                    });
                 });
             });
+
+            function calcTotal(amount, price) {
+                if($.trim(amount).lenght == 0 && $.trim(price).lenght == 0) return false;
+
+                sum += amount * price;
+                
+                if (sum != 0) {
+                    $('.total').html(sum)
+                    $('.total').val(sum)
+                } else {
+                    $('.total').val(0)
+                    $('.total').html("-")
+                }
+            }
+
             function addProductSection() {
                 $("#product-list").append(
-                    '<hr>'+
-                    '<div class="form-group pull-in clearfix">'+
-                        '<div class="col-sm-12">'+
-                            '<label>เลือกสินค้า</label>'+
-                            '<select name="product" class="form-control rounded m-b">'+
-                                '<option>เลือกสินค้า</option>'+
-                            '</select>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="form-group pull-in clearfix">'+
-                        '<div class="col-sm-6">'+
-                            '<label>จำนวน</label>'+
-                            '<input type="text" name="amount" class="form-control rounded parsley-validated"'+
-                                'data-required="true" autocomplete="off">'+
-                        '</div>'+
-                        '<div class="col-sm-6">'+
-                            '<label>ราคาต่อหน่วย</label>'+
-                            '<input type="text" name="price" class="form-control rounded parsley-validated"'+
-                                'data-required="true" autocomplete="off">'+
-                        '</div>'+
-                    '</div>'
+                    '<hr>' +
+                    $('#product-row').html()
                 );
             }
         </script>

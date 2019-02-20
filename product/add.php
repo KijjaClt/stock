@@ -7,8 +7,8 @@ if (isset($_POST["action"])) {
 
     $no = $_POST["no"];
     $name = $_POST["name"];
+    $costPrice = ($_POST["cost_price"] != "") ? $_POST["cost_price"] : "NULL";
     $normalPrice = ($_POST["normal_price"] != "") ? $_POST["normal_price"] : "NULL";
-    $vipPrice = ($_POST["vip_price"] != "") ? $_POST["vip_price"] : "NULL";
     $category = $_POST["category"];
     $sql = "INSERT INTO product (
                 product_id, 
@@ -23,9 +23,9 @@ if (isset($_POST["action"])) {
                 NULL, 
                 '" . $no . "', 
                 '" . $name . "', 
-                NULL, 
+                " . $costPrice . ", 
                 " . $normalPrice . ", 
-                " . $vipPrice . ", 
+                NULL, 
                 0, 
                 " . $category . "
             );";
@@ -95,17 +95,17 @@ if (isset($_POST["action"])) {
                                             <div class="col-sm-12">
                                                 <label>ชื่อสินค้า</label>
                                                 <input type="text" name="name" class="form-control rounded parsley-validated"
-                                                    data-regexp="^[a-zA-Z][a-zA-Z0-9.,$;]+$" data-required="true" autocomplete="off">
+                                                    data-required="true" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-6">
-                                                <label>ราคาขายส่ง</label>
-                                                <input type="text" name="vip_price" class="form-control rounded parsley-validated"
+                                                <label>ราคาต้นทุน</label>
+                                                <input type="text" name="cost_price" class="form-control rounded parsley-validated"
                                                     data-min="1" data-type="number" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
-                                                <label>ราคาขายปลีก</label>
+                                                <label>ราคาขาย</label>
                                                 <input type="text" name="normal_price" class="form-control rounded parsley-validated"
                                                     data-min="1" data-type="number" autocomplete="off">
                                             </div>
