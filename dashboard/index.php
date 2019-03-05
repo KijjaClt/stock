@@ -1,3 +1,27 @@
+<?php
+require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
+
+$db = new DB();
+$db->connect();
+// date("Y-m-d H:i:s")
+$result = $db->query("SELECT SUM(net_price) as sumSaleByToday FROM sale WHERE sale_date LIKE '". date("Y") ."-". date("m") ."-". date("d") ."'");
+$saleToday = mysqli_fetch_assoc($result)["sumSaleByToday"] ?: 0.00;
+
+$result = $db->query("SELECT SUM(net_price) as sumSaleByThisMonth FROM sale WHERE sale_date LIKE '". date("Y") ."-". date("m") ."-%'");
+$saleThisMonth = mysqli_fetch_assoc($result)["sumSaleByThisMonth"] ?: 0.00;
+
+$result = $db->query("SELECT SUM(net_price) as sumSaleByThisYear FROM sale WHERE sale_date LIKE '". date("Y") ."-%-%'");
+$saleThisYear = mysqli_fetch_assoc($result)["sumSaleByThisYear"] ?: 0.00;
+
+$result = $db->query("SELECT SUM(net_price) as totalBuy FROM buy");
+$totalBuy = mysqli_fetch_assoc($result)["totalBuy"];
+
+$result = $db->query("SELECT SUM(net_price) as totalSale FROM sale");
+$totalSale = mysqli_fetch_assoc($result)["totalSale"];
+
+$db->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,15 +65,16 @@
                       <p>
                         <div class="col-lg-3">
                           <p><b>ยอดขายวันนี้</b></p>
-                          <p>-</p>
+                          <p><?= sprintf("%.02f", $saleToday); ?></p>
                         </div>
                         <div class="col-lg-3">
                           <p><b>ยอดขายเดือนนี้</b></p>
-                          <p>-</p>
+                          <p><?= sprintf("%.02f", $saleThisMonth); ?></p>
                         </div>
+                        
                         <div class="col-lg-3">
                           <p><b>ยอดขายรวมทั้งปี</b></p>
-                          <p>-</p>
+                          <p><?= sprintf("%.02f", $saleThisYear); ?></p>
                         </div>
                         <div class="col-lg-3">
                           <p><b>หมวดหมู่ขายดีปีนี้</b></p>
@@ -68,15 +93,15 @@
                   <p>
                     <div class="col-lg-4">
                       <p><b>ยอดขาย</b></p>
-                      <p>-</p>
+                      <p><?= $totalSale ?></p>
                     </div>
                     <div class="col-lg-4">
                       <p><b>ต้นทุน</b></p>
-                      <p>-</p>
+                      <p><?= $totalBuy ?></p>
                     </div>
                     <div class="col-lg-4">
                       <p><b>กำไร/ขาดทุน</b></p>
-                      <p>-</p>
+                      <p><?= sprintf("%.02f", $totalSale - $totalBuy); ?></p>
                     </div>
                   </p>
                 </div>
