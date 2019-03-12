@@ -31,12 +31,12 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="/stock/refund">
                             <i class="icon-retweet"></i>
                             <span>รับคืนสินค้า</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="dropdown-submenu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="icon-shopping-cart"></i>
@@ -77,12 +77,12 @@
                             <span>พนักงาน</span>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="/stock/setting">
                             <i class="icon-wrench"></i>
                             <span>ตั้งค่า</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="/stock/">
                             <i class="icon-off"></i>

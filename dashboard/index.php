@@ -19,6 +19,12 @@ $totalBuy = mysqli_fetch_assoc($result)["totalBuy"];
 $result = $db->query("SELECT SUM(net_price) as totalSale FROM sale");
 $totalSale = mysqli_fetch_assoc($result)["totalSale"];
 
+$result = $db->query("SELECT MAX(category_id), category_name FROM sale 
+                      NATURAL JOIN sale_detail
+                      NATURAL JOIN product
+                      NATURAL JOIN category");
+$mostCategory = mysqli_fetch_assoc($result)["category_name"];
+
 $db->close();
 ?>
 
@@ -78,7 +84,7 @@ $db->close();
                         </div>
                         <div class="col-lg-3">
                           <p><b>หมวดหมู่ขายดีปีนี้</b></p>
-                          <p>-</p>
+                          <p><?= $mostCategory; ?></p>
                         </div>
                       </p>
                     </div>
