@@ -66,7 +66,7 @@ if (isset($_POST["action"])) {
                                             <label>ชื่อหมวดหมู่</label>
                                             <input type="hidden" value="<?= $_GET["id"]; ?>" name="id">
                                             <input type="text" value="<?= $row["category_name"]; ?>" name="name" class="form-control rounded parsley-validated"
-                                                data-regexp="^[a-zA-Z][a-zA-Z0-9.,$;]+$" data-required="true" autocomplete="off">
+                                                data-required="true" autocomplete="off">
                                         </div>
                                     </div>
                                     <footer class="panel-footer text-right bg-light lter">

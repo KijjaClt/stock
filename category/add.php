@@ -58,7 +58,7 @@ if (isset($_POST["action"])) {
                                         <div class="form-group">
                                             <label>ชื่อหมวดหมู่</label>
                                             <input type="text" name="name" class="form-control rounded parsley-validated"
-                                                data-regexp="^[a-zA-Z][a-zA-Z0-9.,$;]+$" data-required="true" autocomplete="off">
+                                                data-required="true" autocomplete="off">
                                         </div>
                                     </div>
                                     <footer class="panel-footer text-right bg-light lter">
