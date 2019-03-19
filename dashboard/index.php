@@ -25,6 +25,13 @@ $result = $db->query("SELECT MAX(category_id), category_name FROM sale
                       NATURAL JOIN category");
 $mostCategory = mysqli_fetch_assoc($result)["category_name"];
 
+$resultBuyList = $db->query("SELECT * FROM buy NATURAL JOIN contact ORDER BY buy_id DESC");
+
+$resultSaleList = $db->query("SELECT * FROM sale NATURAL JOIN contact ORDER BY sale_id DESC");
+
+// $result = $db->query("SELECT SUM(net_price) as totalSale FROM sale");
+// $totalSale = mysqli_fetch_assoc($result)["totalSale"];
+
 $db->close();
 ?>
 
@@ -49,6 +56,17 @@ $db->close();
     <script src="/stock/asset/js/ie/html5.js" cache="false"></script>
     <script src="/stock/asset/js/ie/fix.js" cache="false"></script>
   <![endif]-->
+
+  <style>
+    a.hover {
+      color: #337ab7;
+      text-decoration: none;
+    }
+
+    a.hover:hover {
+        text-decoration: underline;
+    }
+  </style>
 </head>
 
 <body>
@@ -112,6 +130,56 @@ $db->close();
                   </p>
                 </div>
               </section>
+              <div class="row">
+                <div class="col-sm-6">
+                  <section class="panel">
+                    <header class="panel-heading">รายการซื้อล่าสุด</header>
+                    <table class="table table-striped m-b-none text-sm">
+                      <thead>
+                        <tr>
+                          <th>รายการ</th>
+                          <th>คู่ค้า</th>                    
+                          <th>มูลค่ารวม (บาท)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <?php if (mysqli_num_rows($resultBuyList) > 0) {
+                                  while ($row = mysqli_fetch_assoc($resultBuyList)) { ?>
+                                    <tr>
+                                      <td width="25%"><a class="hover" href="/stock/buy/list/detail.php?id=<?= $row["buy_id"] ?>"><?= $row["buy_id"] ?></a></td>
+                                      <td><?= $row["contact_name"] ?></td>
+                                      <td width="20%"><?= $row["net_price"] ?></td>
+                                    </tr>
+                          <?php }} ?>
+                      </tbody>
+                    </table>
+                  </section>
+                </div>
+                <div class="col-sm-6">
+                  <section class="panel">
+                    <header class="panel-heading">รายการขายล่าสุด</header>
+                    <table class="table table-striped m-b-none text-sm">
+                      <thead>
+                        <tr>
+                          <th>รายการ</th>
+                          <th>ลูกค้า</th>                    
+                          <th>มูลค่ารวม (บาท)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php if (mysqli_num_rows($resultSaleList) > 0) {
+                                while ($row = mysqli_fetch_assoc($resultSaleList)) { ?>
+                                  <tr>
+                                    <td width="25%"><a class="hover" href="/stock/sale/list/detail.php?id=<?= $row["sale_id"] ?>"><?= $row["sale_id"] ?></a></td>
+                                    <td><?= $row["contact_name"] ?></td>
+                                    <td width="20%"><?= $row["net_price"] ?></td>
+                                  </tr>
+                        <?php }} ?>
+                      </tbody>
+                    </table>
+                  </section>
+                </div>
+              </div>
               <section class="panel">
                 <header class="panel-heading">
                   <h4>สินค้าที่มีการเคลื่อนไหว</h4>
