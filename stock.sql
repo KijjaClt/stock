@@ -141,7 +141,7 @@ CREATE TABLE `product` (
   `product_no` varchar(45) NOT NULL,
   `product_name` varchar(100) NOT NULL,
   `product_cost` decimal(6,2) DEFAULT NULL,
-  `product_normal_price` decimal(6,2) DEFAULT NULL,
+  `product_price` decimal(6,2) DEFAULT NULL,
   `product_vip_price` decimal(6,2) DEFAULT NULL,
   `product_amount` int(11) NOT NULL DEFAULT '0',
   `category_id` int(11) NOT NULL
@@ -151,7 +151,7 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`product_id`, `product_no`, `product_name`, `product_cost`, `product_normal_price`, `product_vip_price`, `product_amount`, `category_id`) VALUES
+INSERT INTO `product` (`product_id`, `product_no`, `product_name`, `product_cost`, `product_price`, `product_vip_price`, `product_amount`, `category_id`) VALUES
 (1, 'P0001', 'เลย์', '3.00', '6.00', '5.00', 12, 4),
 (6, 'P0002', 'ฟริสโต', NULL, '5.00', '4.00', 0, 4);
 

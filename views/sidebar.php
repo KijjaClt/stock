@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!isset($_SESSION["username"])) {
+    header("location: ../");
+}
+?>
 <!-- .aside -->
 <aside class="bg-primary aside-sm" id="nav">
     <section class="vbox">
@@ -11,12 +17,21 @@
             <!-- nav -->
             <nav class="nav-primary hidden-xs">
                 <ul class="nav">
-                    <li>
-                        <a href="/stock/dashboard">
-                            <i class="icon-dashboard"></i>
-                            <span>รายงาน</span>
+                    <li class="active">
+                        <a href="#">
+                            <span><?= $_SESSION["displayName"] ?></span>
                         </a>
                     </li>
+                    <?php
+                    if ($_SESSION["username"] == "admin") {
+                        echo '<li>
+                                <a href="/stock/dashboard">
+                                    <i class="icon-dashboard"></i>
+                                    <span>รายงาน</span>
+                                </a>
+                            </li>';
+                    }
+                    ?>
                     <li class="dropdown-submenu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="icon-copy"></i>
@@ -71,12 +86,16 @@
                             <span>ลูกค้า/คู่ค้า</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/stock/employee">
-                            <i class="icon-group"></i>
-                            <span>พนักงาน</span>
-                        </a>
-                    </li>
+                    <?php
+                    if ($_SESSION["username"] == "admin") {
+                        echo '<li>
+                                <a href="/stock/employee">
+                                    <i class="icon-group"></i>
+                                    <span>พนักงาน</span>
+                                </a>
+                            </li>';
+                    }
+                    ?>
                     <!-- <li>
                         <a href="/stock/setting">
                             <i class="icon-wrench"></i>

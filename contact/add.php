@@ -10,7 +10,7 @@ if (isset($_POST["action"])) {
     $address = $_POST["address"];
     $tel = $_POST["tel"];
     $type = $_POST["type"];
-    $sql = "INSERT INTO contact (contact_id, contact_name, contact_lastname, contact_address, contact_tel, create_date, contact_picture, contact_type) VALUES (NULL, '" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $tel . "', '" . date("Y-m-d H:i:s") . "', NULL, '" . $type . "');";
+    $sql = "INSERT INTO contact (contact_id, contact_name, contact_lastname, contact_address, contact_tel, create_date, contact_type) VALUES (NULL, '" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $tel . "', '" . date("Y-m-d H:i:s") . "', '" . $type . "');";
     
     $result = $db->query($sql);
     header("location: /stock/contact");

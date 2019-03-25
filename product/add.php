@@ -15,7 +15,7 @@ if (isset($_POST["action"])) {
                 product_no, 
                 product_name, 
                 product_cost, 
-                product_normal_price, 
+                product_price, 
                 product_vip_price, 
                 product_amount, 
                 category_id

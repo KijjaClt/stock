@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
 
 $db = new DB();
 $db->connect();
-$result = $db->query("SELECT * FROM sale NATURAL JOIN contact NATURAL JOIN employee");
+$result = $db->query("SELECT * FROM sale NATURAL JOIN contact NATURAL JOIN employee ORDER BY sale_id DESC");
 $db->close();
 ?>
 

@@ -14,23 +14,22 @@ if (isset($_POST["action"])) {
     $amount = $_POST["amount"];
     $price = $_POST["price"];
 
-    $sqlSale = "INSERT INTO sale (sale_id, contact_id, employee_id, sale_date, net_price, net_discount, sale_status) 
+    session_start();
+
+    $sqlSale = "INSERT INTO sale (sale_id, sale_date, net_price, contact_id, employee_id) 
             VALUES ('" . $id . "', 
-                    '" . $contact . "', 
-                    '" . 1 . "',
                     '" . $date . "', 
                     " . $total . ",
-                    ". 0 .",
-                    ". 0 .");";
+                    '" . $contact . "', 
+                    '" . $_SESSION["userID"] . "');";
     $result = $db->query($sqlSale);
 
     for ($i=0; $i < sizeof($product); $i++) { 
-        $sqlDetail = "INSERT INTO sale_detail (sale_id, product_id, amount, price, discount) 
+        $sqlDetail = "INSERT INTO sale_detail (sale_id, product_id, amount, price) 
             VALUES ('" . $id . "', 
                     " . $product[$i] . ", 
                     " . $amount[$i] . ", 
-                    '" . $price[$i] . "',
-                    '" . 0 . "');";
+                    '" . $price[$i] . "');";
         $result = $db->query($sqlDetail);
         
         $sqlUpdate = "UPDATE product SET product_amount = product_amount-" . $amount[$i] . " WHERE product_id = " . $product[$i] . ";";
@@ -131,9 +130,9 @@ if (isset($_POST["action"])) {
                                                 <div class="col-sm-12">
                                                     <label>เลือกสินค้า</label>
                                                     <select name="product[]" class="form-control rounded m-b parsley-validated" data-required="true">
-                                                        <option data-price='0.00' value>--- กรุณาเลือกสินค้า ---</option>
+                                                        <option data-price='0.00' data-amount='0' value>--- กรุณาเลือกสินค้า ---</option>
                                                         <?php while ($row = mysqli_fetch_assoc($products)) {
-                                                            echo "<option data-price='". $row['product_normal_price'] ."' value='". $row['product_id'] ."'>". $row['product_name'] ."</option>";
+                                                            echo "<option data-price='". $row['product_price'] ."' data-amount='". $row['product_amount'] ."' value='". $row['product_id'] ."'>". $row['product_name'] ."</option>";
                                                         }
                                                         ?>
                                                     </select>
@@ -193,7 +192,14 @@ if (isset($_POST["action"])) {
                         let amount = $(this).val();
                         let price = $("input[name*='price']")[i].value;
 
-                        calcTotal(amount, price);
+                        let productAmount = $("select[name*='product']").children("option:selected").attr("data-amount");
+                        
+                        if (parseInt(amount) > parseInt(productAmount)) {
+                            alert("จำนวนสินค้าไม่พอขาย");
+                            $(this).val(productAmount);
+                        } else {
+                            calcTotal(amount, price);   
+                        }
                     });
                 });
 

@@ -14,7 +14,7 @@ if (isset($_POST["action"])) {
     $sql = "UPDATE product SET
                 product_no = '" . $no . "', 
                 product_name = '" . $name . "',
-                product_normal_price = " . $normalPrice . ",  
+                product_price = " . $normalPrice . ",  
                 product_cost = " . $costPrice . ",
                 category_id = " . $category . "
                 WHERE product_id = " . $id . "
@@ -99,7 +99,7 @@ if (isset($_POST["action"])) {
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>ราคาขาย</label>
-                                                <input type="text"  value="<?= $product["product_normal_price"]; ?>" name="normal_price" class="form-control rounded parsley-validated"
+                                                <input type="text"  value="<?= $product["product_price"]; ?>" name="normal_price" class="form-control rounded parsley-validated"
                                                     data-min="1" data-type="number" autocomplete="off">
                                             </div>
                                         </div>

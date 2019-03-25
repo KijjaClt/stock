@@ -83,10 +83,10 @@ $db->close();
                           <p><?= ($row["product_cost"] == NULL) ? "-" : $row["product_cost"]; ?></p>
                         </td>
                         <td>
-                          <p><?= ($row["product_normal_price"] == NULL) ? "-" : $row["product_normal_price"]; ?></p>
+                          <p><?= ($row["product_price"] == NULL) ? "-" : $row["product_price"]; ?></p>
                         </td>
                         <td>
-                          <p><?= $row["product_amount"]; ?></p>
+                          <p><?= ($row["product_amount"] <= 0) ? "<a style='color:red;'>สินค้าหมด</a>" : $row["product_amount"]; ?></p>
                         </td>
                         <td>
                           <a href="edit.php?id=<?= $row["product_id"]; ?>" class="btn btn-sm bg-warning"><i class="icon-pencil"></i></a>

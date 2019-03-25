@@ -1,6 +1,8 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/stock/db.php';
 
+session_start();
+
 if (isset($_POST["action"])) {
     $db = new DB();
     $db->connect();
@@ -8,13 +10,25 @@ if (isset($_POST["action"])) {
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
             if ($row["username"] == $_POST["username"] && $row["password"] == md5($_POST["password"])) {
-                header("location: dashboard/");
+                $_SESSION["username"] = $_POST["username"];
+                $_SESSION["userID"] = $row["employee_id"];
+                $_SESSION["displayName"] = $row["employee_name"]." ".$row["employee_lastname"];
+                session_write_close();
+
+                if ($row["username"] == "admin") {
+                  header("location: dashboard/");
+                } else {
+                  header("location: product/");
+                }
+                
             } else {
                 break;
             }
         }
     }
     $db->close();
+} else {
+  session_destroy();
 }
 ?>
 <!DOCTYPE html>

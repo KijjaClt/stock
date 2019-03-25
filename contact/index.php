@@ -44,8 +44,8 @@ $db->close();
             <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">
-                  <a href="add.php" class="btn bg-success pull-right"><i class="icon-plus"></i>เพิ่มลูกค้า</a>
-                  <h4>รายชื่อลูกค้า</h4>
+                  <a href="add.php" class="btn bg-success pull-right"><i class="icon-plus"></i>เพิ่มลูกค้า/คู่ค้า</a>
+                  <h4>รายชื่อลูกค้า/คู่ค้า</h4>
                 </header>
                 <div class="table-responsive">
                   <table class="table table-striped b-t text-sm">

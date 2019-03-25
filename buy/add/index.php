@@ -14,20 +14,22 @@ if (isset($_POST["action"])) {
     $amount = $_POST["amount"];
     $price = $_POST["price"];
 
+    session_start();
+
     $sqlBuy = "INSERT INTO buy (buy_id, buy_date, net_price, contact_id, employee_id) 
             VALUES ('" . $id . "', 
                     '" . $date . "', 
                     " . $total . ", 
                     '" . $contact . "', 
-                    '" . 1 . "');";
+                    '" . $_SESSION["userID"] . "');";
     $result = $db->query($sqlBuy);
 
     for ($i=0; $i < sizeof($product); $i++) { 
         $sqlDetail = "INSERT INTO buy_detail (buy_id, product_id, amount, price) 
-        VALUES ('" . $id . "', 
-                " . $product[$i] . ", 
-                " . $amount[$i] . ", 
-                '" . $price[$i] . "');";
+            VALUES ('" . $id . "', 
+                    " . $product[$i] . ", 
+                    " . $amount[$i] . ", 
+                    '" . $price[$i] . "');";
         $result = $db->query($sqlDetail);   
 
         $sqlUpdate = "UPDATE product SET product_amount = product_amount+" . $amount[$i] . " WHERE product_id = " . $product[$i] . ";";
