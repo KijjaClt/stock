@@ -8,8 +8,8 @@ if (isset($_POST["action"])) {
     $id = $_POST["id"];
     $no = $_POST["no"];
     $name = $_POST["name"];
-    $costPrice = ($_POST["cost_price"] != "") ? $_POST["cost_price"] : "NULL";
-    $normalPrice = ($_POST["normal_price"] != "") ? $_POST["normal_price"] : "NULL";
+    $costPrice = ($_POST["cost"] != "") ? $_POST["cost"] : "NULL";
+    $normalPrice = ($_POST["price"] != "") ? $_POST["price"] : "NULL";
     $category = $_POST["category"];
     $sql = "UPDATE product SET
                 product_no = '" . $no . "', 
@@ -94,12 +94,12 @@ if (isset($_POST["action"])) {
                                         <div class="form-group pull-in clearfix">
                                             <div class="col-sm-6">
                                                 <label>ราคาต้นทุน</label>
-                                                <input type="text" value="<?= $product["product_cost"]; ?>" name="cost_price" class="form-control rounded parsley-validated"
+                                                <input type="text" value="<?= $product["product_cost"]; ?>" name="cost" class="form-control rounded parsley-validated"
                                                     data-min="1" data-type="number" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>ราคาขาย</label>
-                                                <input type="text"  value="<?= $product["product_price"]; ?>" name="normal_price" class="form-control rounded parsley-validated"
+                                                <input type="text"  value="<?= $product["product_price"]; ?>" name="price" class="form-control rounded parsley-validated"
                                                     data-min="1" data-type="number" autocomplete="off">
                                             </div>
                                         </div>

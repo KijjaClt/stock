@@ -16,7 +16,6 @@ if (isset($_POST["action"])) {
                 product_name, 
                 product_cost, 
                 product_price, 
-                product_vip_price, 
                 product_amount, 
                 category_id
             ) VALUES (
@@ -25,7 +24,6 @@ if (isset($_POST["action"])) {
                 '" . $name . "', 
                 " . $costPrice . ", 
                 " . $normalPrice . ", 
-                NULL, 
                 0, 
                 " . $category . "
             );";
